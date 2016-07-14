@@ -15,7 +15,7 @@ class ViewController: UIViewController
         let pv                  = PopUpViewController()
         pv.view.frame           = CGRectMake(0, 0, s.width - 2 * 40, s.height * 0.6)
         pv.view.backgroundColor = .whiteColor()
-        popUpEffectType         = .ZoomIn //.ZoomOut/.FlipUp/.FlipDown
+        popUpEffectType         = .FlipDown //.ZoomIn(default)/.ZoomOut/.FlipUp/.FlipDown
         presentPopUpViewController(pv)
     }
 }
