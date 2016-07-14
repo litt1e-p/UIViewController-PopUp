@@ -1,0 +1,12 @@
+PODS:
+  - VisualEffectView (1.0.4)
+
+DEPENDENCIES:
+  - VisualEffectView (~> 1.0.4)
+
+SPEC CHECKSUMS:
+  VisualEffectView: 3c2988dc89a1293f0950aae9fe9f5f1c133b9811
+
+PODFILE CHECKSUM: 7f45e15bd8a02562f1a35e954f6d6becef47bfa6
+
+COCOAPODS: 1.0.0
