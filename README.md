@@ -1,2 +1,37 @@
 # UIViewController-PopUp
 an extension of UIViewController for pop up a another ViewController with animation effects
+
+# Usage
+`needs one line code only!`
+```swift
+  //custom your target poping up viewController anything you want, such as its bound size ...
+  let pv = PopUpViewController()
+  pv.view.frame           = CGRectMake(0, 0, 300, 400)
+  // set a type for poping up animation effect
+  popUpEffectType         = .FlipDown //.ZoomIn(default)/.ZoomOut/.FlipUp/.FlipDown
+  presentPopUpViewController(pv)
+```
+
+# Install
+
+- use cocoapods
+```swift
+pod 'UIViewController-PopUp', '~> 0.0.1'
+```
+- manual import
+```swift
+just download lib folder and add into your project
+```
+
+# Screenshot
+
+<img src="Screenshots/screenshot01.gif" width="320">
+<img src="Screenshots/screenshot02.gif" width="320">
+<img src="Screenshots/screenshot03.gif" width="320">
+<img src="Screenshots/screenshot04.gif" width="320">
+
+# Release notes
+
+- 0.0.1
+
+`release first version.`
