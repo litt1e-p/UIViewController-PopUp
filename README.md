@@ -5,10 +5,10 @@ an extension of UIViewController for pop up a another ViewController with animat
 `needs one line code only!`
 ```swift
   //custom your target poping up viewController anything you want, such as its bound size ...
-  let pv = PopUpViewController()
-  pv.view.frame           = CGRectMake(0, 0, 300, 400)
+  let pv          = PopUpViewController()
+  pv.view.frame   = CGRectMake(0, 0, 300, 400)
   // set a type for poping up animation effect
-  popUpEffectType         = .FlipDown //.ZoomIn(default)/.ZoomOut/.FlipUp/.FlipDown
+  popUpEffectType = .FlipDown //.ZoomIn(default)/.ZoomOut/.FlipUp/.FlipDown
   presentPopUpViewController(pv)
 ```
 
