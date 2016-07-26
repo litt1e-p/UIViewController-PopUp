@@ -28,9 +28,20 @@ just download lib folder and add into your project
 
 # Screenshot
 
+- ZoomIn effect
+
 <img src="Screenshots/screenshot01.gif" width="320">
+
+- ZoomOut effect
+
 <img src="Screenshots/screenshot02.gif" width="320">
+
+- FlipUp effect
+
 <img src="Screenshots/screenshot03.gif" width="320">
+
+- FlipDown effect
+
 <img src="Screenshots/screenshot04.gif" width="320">
 
 # Release notes
