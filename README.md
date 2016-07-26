@@ -5,7 +5,7 @@ an extension of UIViewController for poping up a another ViewController with ani
 Fully customizable the poping up any viewController, it just do some animated effects
 
 # Usage
-`needs one line code only!`
+
 ```swift
   //custom your target poping up viewController anything you want, such as its bound size ...
   let pv          = UIViewController()
