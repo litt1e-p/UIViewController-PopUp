@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2016 litt1e-p ( https://github.com/litt1e-p )
+// Copyright (c) 2016-2017 litt1e-p ( https://github.com/litt1e-p )
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -27,24 +27,24 @@ import VisualEffectView
 
 public enum UIViewControllerPopUpEffectTye: String
 {
-    case ZoomIn, ZoomOut, FlipUp, FlipDown
+    case zoomIn, zoomOut, flipUp, flipDown
 }
 
 private let kLPPUPopUpViewTag                            = 9012702
 private let kLPPUPopUpBluredViewTag                      = 9012703
 private let kLPPUPopUpOverlayViewTag                     = 9012701
 private let kLPPURotationAngle: CGFloat                  = 70.0
-private let kLPPUAnimationDuration: NSTimeInterval       = 0.4
+private let kLPPUAnimationDuration: TimeInterval         = 0.4
 private var kLPPUAssociatedPopupEffectKey: UInt8         = 0
 private var kLPPUAssociatedPopupViewControllerKey: UInt8 = 0
 
 public extension UIViewController
 {
-    public func presentPopUpViewController(viewController: UIViewController) {
+    public func presentPopUpViewController(_ viewController: UIViewController) {
         presentPopUpViewController(viewController, completion: nil)
     }
     
-    public func presentPopUpViewController(viewController: UIViewController, completion: (()->Void)?) {
+    public func presentPopUpViewController(_ viewController: UIViewController, completion: (()->Void)?) {
         enPopupViewController = viewController
         presentPopUpView(viewController.view, completion: completion)
     }
@@ -53,7 +53,7 @@ public extension UIViewController
         dismissPopUpViewController(nil)
     }
     
-    public func dismissPopUpViewController(completion: (()->Void)?) {
+    public func dismissPopUpViewController(_ completion: (()->Void)?) {
         let sourceView  = topView()
         let popupView   = sourceView.viewWithTag(kLPPUPopUpViewTag)
         let overlayView = sourceView.viewWithTag(kLPPUPopUpOverlayViewTag)
@@ -61,27 +61,27 @@ public extension UIViewController
         performDismissAnimation(sourceView, blurView: blurView, popupView: popupView!, overlayView: overlayView!, completion: completion)
     }
     
-    private func presentPopUpView(popUpView: UIView, completion: (()->Void)?) {
+    private func presentPopUpView(_ popUpView: UIView, completion: (()->Void)?) {
         let sourceView = topView()
         guard !sourceView.subviews.contains(popUpView) else {return}
 
         let overlayView                = UIView(frame: sourceView.bounds)
-        overlayView.autoresizingMask   = [.FlexibleWidth, .FlexibleHeight]
+        overlayView.autoresizingMask   = [.flexibleWidth, .flexibleHeight]
         overlayView.tag                = kLPPUPopUpOverlayViewTag
-        overlayView.backgroundColor    = .clearColor()
+        overlayView.backgroundColor    = .clear
 
         let bluredView                 = VisualEffectView(frame: sourceView.bounds)
         bluredView.blurRadius          = 4
-        bluredView.colorTint           = .blackColor()
-        bluredView.autoresizingMask    = [.FlexibleWidth, .FlexibleHeight]
+        bluredView.colorTint           = .black
+        bluredView.autoresizingMask    = [.flexibleWidth, .flexibleHeight]
         bluredView.tag                 = kLPPUPopUpBluredViewTag
         sourceView.addSubview(bluredView)
 
-        let dismissButton              = UIButton(type: .Custom)
-        dismissButton.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        dismissButton.backgroundColor  = UIColor.blackColor().colorWithAlphaComponent(0.3)
+        let dismissButton              = UIButton(type: .custom)
+        dismissButton.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        dismissButton.backgroundColor  = UIColor.black.withAlphaComponent(0.3)
         dismissButton.frame            = sourceView.bounds
-        dismissButton.addTarget(self, action: #selector(self.dismissBtnEvent), forControlEvents: .TouchUpInside)
+        dismissButton.addTarget(self, action: #selector(self.dismissBtnEvent), for: .touchUpInside)
         overlayView.addSubview(dismissButton)
 
         popUpView.layer.cornerRadius   = 3.5
@@ -103,36 +103,36 @@ public extension UIViewController
     
     private func transform3d() -> CATransform3D {
         switch popUpEffectType! {
-        case .FlipUp:
+        case .flipUp:
             var transform = CATransform3DIdentity
             transform     = CATransform3DTranslate(transform, 0.0, 200.0, 0.0)
             transform.m34 = 1.0 / 800.0
-            transform     = CATransform3DRotate(transform, kLPPURotationAngle * CGFloat(M_PI) / 180.0, 1.0, 0.0, 0.0)
+            transform     = CATransform3DRotate(transform, kLPPURotationAngle * CGFloat(Double.pi) / 180.0, 1.0, 0.0, 0.0)
             let scale     = CATransform3DMakeScale(0.7, 0.7, 0.7)
             return CATransform3DConcat(transform, scale)
 
-        case .FlipDown:
+        case .flipDown:
             var transform = CATransform3DIdentity
             transform     = CATransform3DTranslate(transform, 0.0, -200.0, 0.0)
             transform.m34 = 1.0 / 800.0
-            transform     = CATransform3DRotate(transform, 180 + kLPPURotationAngle * CGFloat(M_PI) / 180.0, 1.0, 0.0, 0.0)
+            transform     = CATransform3DRotate(transform, 180 + kLPPURotationAngle * CGFloat(Double.pi) / 180.0, 1.0, 0.0, 0.0)
             let scale     = CATransform3DMakeScale(0.7, 0.7, 0.7)
             return CATransform3DConcat(transform, scale)
             
-        case .ZoomIn:
+        case .zoomIn:
             return CATransform3DMakeScale(0.01, 0.01, 1.00)
             
-        case .ZoomOut:
+        case .zoomOut:
             return CATransform3DMakeScale(1.50, 1.50, 1.50)
             
         }
         
     }
     
-    private func performAppearAnimation(blurView: VisualEffectView, popupView: UIView, completion: (()->Void)?) {
+    private func performAppearAnimation(_ blurView: VisualEffectView, popupView: UIView, completion: (()->Void)?) {
         popupView.layer.transform = transform3d()
         let transform             = CATransform3DIdentity
-        UIView.animateWithDuration(kLPPUAnimationDuration, animations: { [weak self] in
+        UIView.animate(withDuration: kLPPUAnimationDuration, animations: { [weak self] in
             self!.enPopupViewController?.viewWillAppear(false)
             popupView.layer.transform = transform
         }) { [weak self] (finished: Bool) in
@@ -143,9 +143,9 @@ public extension UIViewController
         }
     }
     
-    private func performDismissAnimation(sourceView: UIView, blurView: VisualEffectView, popupView: UIView, overlayView: UIView, completion: (()->Void)?) {
+    private func performDismissAnimation(_ sourceView: UIView, blurView: VisualEffectView, popupView: UIView, overlayView: UIView, completion: (()->Void)?) {
         let transform = transform3d()
-        UIView.animateWithDuration(kLPPUAnimationDuration, animations: { [weak self] in
+        UIView.animate(withDuration: kLPPUAnimationDuration, animations: { [weak self] in
             self!.enPopupViewController?.viewWillDisappear(false)
             popupView.layer.transform = transform
         }) { [weak self] (finished: Bool) in
@@ -162,8 +162,8 @@ public extension UIViewController
     
     private func topView() -> UIView {
         var recentViewController = self
-        while (recentViewController.parentViewController != nil) {
-            recentViewController = recentViewController.parentViewController!
+        while (recentViewController.parent != nil) {
+            recentViewController = recentViewController.parent!
         }
         return recentViewController.view
     }
@@ -183,7 +183,7 @@ public extension UIViewController
             if let effect = objc_getAssociatedObject(self, &kLPPUAssociatedPopupEffectKey) as? String {
                 return UIViewControllerPopUpEffectTye(rawValue: effect)
             } else {
-                return .ZoomIn
+                return .zoomIn
             }
         }
         
