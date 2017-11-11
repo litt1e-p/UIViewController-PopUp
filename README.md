@@ -13,9 +13,9 @@ Fully customizable the poping up any viewController, it just do some animated ef
 ```swift
   //custom your target poping up viewController anything you want, such as its bound size ...
   let pv          = UIViewController()
-  pv.view.frame   = CGRectMake(0, 0, 300, 400)
+  pv.view.frame   = CGRect(x: 0, y: 0, width: 300, height: 400)
   // set a type for poping up animation effect
-  popUpEffectType = .FlipDown //.ZoomIn(default)/.ZoomOut/.FlipUp/.FlipDown
+  popUpEffectType = .flipDown //.zoomIn(default)/.zoomOut/.flipUp/.flipDown
   presentPopUpViewController(pv)
 ```
 
@@ -23,7 +23,7 @@ Fully customizable the poping up any viewController, it just do some animated ef
 
 - use cocoapods
 ```swift
-pod 'UIViewController-PopUp', '~> 0.0.1'
+pod 'UIViewController-PopUp', '~> 0.0.2'
 ```
 - manual import
 ```swift
@@ -49,6 +49,10 @@ just download lib folder and add into your project
 <img src="Screenshots/screenshot04.gif" width="320">
 
 # Release notes
+
+- 0.0.2
+
+`support swift 4.0.`
 
 - 0.0.1
 
