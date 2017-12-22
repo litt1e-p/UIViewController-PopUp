@@ -23,7 +23,7 @@ Fully customizable the poping up any viewController, it just do some animated ef
 
 - use cocoapods
 ```swift
-pod 'UIViewController-PopUp', '~> 0.0.2'
+pod 'UIViewController-Popup', '~> 0.0.2'
 ```
 - manual import
 ```swift
