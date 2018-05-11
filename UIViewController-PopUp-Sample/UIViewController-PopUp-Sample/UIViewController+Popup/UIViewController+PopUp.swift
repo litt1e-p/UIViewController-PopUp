@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2017 litt1e-p ( https://github.com/litt1e-p )
+// Copyright (c) 2018-2019 litt1e-p ( https://github.com/litt1e-p )
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -57,7 +57,7 @@ public extension UIViewController
         let sourceView  = topView()
         let popupView   = sourceView.viewWithTag(kLPPUPopUpViewTag)
         let overlayView = sourceView.viewWithTag(kLPPUPopUpOverlayViewTag)
-        let blurView    = sourceView.viewWithTag(kLPPUPopUpBluredViewTag) as! VisualEffectView
+        let blurView    = sourceView.viewWithTag(kLPPUPopUpBluredViewTag) as? VisualEffectView
         performDismissAnimation(sourceView, blurView: blurView, popupView: popupView!, overlayView: overlayView!, completion: completion)
     }
     
@@ -143,14 +143,16 @@ public extension UIViewController
         }
     }
     
-    private func performDismissAnimation(_ sourceView: UIView, blurView: VisualEffectView, popupView: UIView, overlayView: UIView, completion: (()->Void)?) {
+    private func performDismissAnimation(_ sourceView: UIView, blurView: VisualEffectView?, popupView: UIView, overlayView: UIView, completion: (()->Void)?) {
         let transform = transform3d()
         UIView.animate(withDuration: kLPPUAnimationDuration, animations: { [weak self] in
             self!.enPopupViewController?.viewWillDisappear(false)
             popupView.layer.transform = transform
         }) { [weak self] (finished: Bool) in
             popupView.removeFromSuperview()
-            blurView.removeFromSuperview()
+            if let _ = blurView {
+                blurView!.removeFromSuperview()
+            }
             overlayView.removeFromSuperview()
             self!.enPopupViewController?.viewDidDisappear(false)
             self!.enPopupViewController = nil
