@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "UIViewController-Popup"
-  s.version          = "0.0.2"
+  s.version          = "0.0.3"
   s.summary          = "UIViewController extension for poping up an another ViewController with animation effects"
   s.description      = <<-DESC
                        an extension of UIViewController for poping up an another ViewController with animation effects in swift
@@ -12,6 +12,6 @@ Pod::Spec.new do |s|
   s.platform = :ios, '9.0'
   s.requires_arc = true
   s.source_files = 'UIViewController-PopUp/*'
-  s.dependency 'VisualEffectView', '~> 3.0.0'
+  s.dependency 'VisualEffectView', '3.0.0'
   s.frameworks = 'Foundation', 'UIKit'
 end
