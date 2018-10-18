@@ -9,7 +9,15 @@
 import UIKit
 
 class PopUpViewController: UIViewController {
-
+    
+    deinit {
+        print("deinit")
+    }
+    
+    @IBAction func dismissBtnEvent(_ sender: UIButton) {
+        dismissPopUpViewController()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

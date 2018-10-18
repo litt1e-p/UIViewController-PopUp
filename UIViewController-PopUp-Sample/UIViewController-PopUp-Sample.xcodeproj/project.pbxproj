@@ -125,7 +125,6 @@
 				04C585AE1D376C8600CF87FC /* Frameworks */,
 				04C585AF1D376C8600CF87FC /* Resources */,
 				CB280A4012EA272C430D85E6 /* [CP] Embed Pods Frameworks */,
-				BEBC239ACDB83B897259A130 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -148,6 +147,7 @@
 				TargetAttributes = {
 					04C585B01D376C8600CF87FC = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 1000;
 					};
 				};
 			};
@@ -184,21 +184,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		BEBC239ACDB83B897259A130 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-UIViewController-PopUp-Sample/Pods-UIViewController-PopUp-Sample-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		CB280A4012EA272C430D85E6 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -366,7 +351,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.litt1e-p.UIViewController-PopUp-Sample";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -380,7 +365,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.litt1e-p.UIViewController-PopUp-Sample";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

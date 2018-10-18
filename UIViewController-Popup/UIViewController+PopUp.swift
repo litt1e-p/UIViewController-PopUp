@@ -30,16 +30,31 @@ public enum UIViewControllerPopUpEffectTye: String
     case zoomIn, zoomOut, flipUp, flipDown
 }
 
-private let kLPPUPopUpViewTag                            = 9012702
-private let kLPPUPopUpBluredViewTag                      = 9012703
-private let kLPPUPopUpOverlayViewTag                     = 9012701
-private let kLPPURotationAngle: CGFloat                  = 70.0
-private let kLPPUAnimationDuration: TimeInterval         = 0.4
-private var kLPPUAssociatedPopupEffectKey: UInt8         = 0
-private var kLPPUAssociatedPopupViewControllerKey: UInt8 = 0
+private let kLPPUPopUpViewTag                                    = 9012702
+private let kLPPUPopUpBluredViewTag                              = 9012703
+private let kLPPUPopUpOverlayViewTag                             = 9012701
+private let kLPPURotationAngle: CGFloat                          = 70.0
+private let kLPPUAnimationDuration: TimeInterval                 = 0.4
+private var kLPPUAssociatedPopupEffectKey: UInt8                 = 0
+private var kLPPUAssociatedPopupViewControllerKey: UInt8         = 1
+private var kLPPUAssociatedPopupViewControllerDelegateKey: UInt8 = 2
 
-public extension UIViewController
+extension UIView {
+    var parentViewController: UIViewController? {
+        var parentResponder: UIResponder? = self
+        while parentResponder != nil {
+            parentResponder = parentResponder!.next
+            if let viewController = parentResponder as? UIViewController {
+                return viewController
+            }
+        }
+        return nil
+    }
+}
+
+extension UIViewController
 {
+    
     public func presentPopUpViewController(_ viewController: UIViewController) {
         presentPopUpViewController(viewController, completion: nil)
     }
@@ -58,12 +73,12 @@ public extension UIViewController
         let popupView   = sourceView.viewWithTag(kLPPUPopUpViewTag)
         let overlayView = sourceView.viewWithTag(kLPPUPopUpOverlayViewTag)
         let blurView    = sourceView.viewWithTag(kLPPUPopUpBluredViewTag) as? VisualEffectView
-        performDismissAnimation(sourceView, blurView: blurView, popupView: popupView!, overlayView: overlayView!, completion: completion)
+        performDismissAnimation(sourceView, blurView: blurView, popupView: popupView, overlayView: overlayView, completion: completion)
     }
     
     private func presentPopUpView(_ popUpView: UIView, completion: (()->Void)?) {
         let sourceView = topView()
-        guard !sourceView.subviews.contains(popUpView) else {return}
+        guard !sourceView.subviews.contains(popUpView) else { return }
 
         let overlayView                = UIView(frame: sourceView.bounds)
         overlayView.autoresizingMask   = [.flexibleWidth, .flexibleHeight]
@@ -102,7 +117,8 @@ public extension UIViewController
     }
     
     private func transform3d() -> CATransform3D {
-        switch popUpEffectType! {
+        let topVc = topView().parentViewController ?? self
+        switch topVc.popUpEffectType! {
         case .flipUp:
             var transform = CATransform3DIdentity
             transform     = CATransform3DTranslate(transform, 0.0, 200.0, 0.0)
@@ -143,19 +159,26 @@ public extension UIViewController
         }
     }
     
-    private func performDismissAnimation(_ sourceView: UIView, blurView: VisualEffectView?, popupView: UIView, overlayView: UIView, completion: (()->Void)?) {
+    private func performDismissAnimation(_ sourceView: UIView, blurView: VisualEffectView?, popupView: UIView?, overlayView: UIView?, completion: (()->Void)?) {
         let transform = transform3d()
-        UIView.animate(withDuration: kLPPUAnimationDuration, animations: { [weak self] in
-            self!.enPopupViewController?.viewWillDisappear(false)
-            popupView.layer.transform = transform
-        }) { [weak self] (finished: Bool) in
-            popupView.removeFromSuperview()
+        let topVc = topView().parentViewController ?? self
+        UIView.animate(withDuration: kLPPUAnimationDuration, animations: { [weak topVc] in
+            topVc!.enPopupViewController?.viewWillDisappear(false)
+            if let _ = popupView {
+                popupView!.layer.transform = transform
+            }
+        }) { [weak topVc] (finished: Bool) in
+            if let _ = popupView {
+                popupView!.removeFromSuperview()
+            }
             if let _ = blurView {
                 blurView!.removeFromSuperview()
             }
-            overlayView.removeFromSuperview()
-            self!.enPopupViewController?.viewDidDisappear(false)
-            self!.enPopupViewController = nil
+            if let _ = overlayView {
+                overlayView!.removeFromSuperview()
+            }
+            topVc!.enPopupViewController?.viewDidDisappear(false)
+            topVc!.enPopupViewController = nil
             if let _ = completion {
                 completion!()
             }
@@ -163,11 +186,8 @@ public extension UIViewController
     }
     
     private func topView() -> UIView {
-        var recentViewController = self
-        while (recentViewController.parent != nil) {
-            recentViewController = recentViewController.parent!
-        }
-        return recentViewController.view
+        let recentViewController = self
+        return recentViewController.view.superview != nil ? (recentViewController.view.superview!.parentViewController != nil ? recentViewController.view.superview!.parentViewController!.view : recentViewController.view) : recentViewController.view
     }
     
     public var enPopupViewController: UIViewController? {

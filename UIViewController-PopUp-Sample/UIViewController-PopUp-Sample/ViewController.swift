@@ -12,7 +12,7 @@ class ViewController: UIViewController
 {
     @IBAction func popUpBtnEvent(sender: AnyObject) {
         let s                   = UIScreen.main.bounds.size
-        let pv                  = PopUpViewController()
+        let pv                  = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
         pv.view.frame           = CGRect(x:0, y:0, width: s.width - 2 * 40, height: s.height * 0.6)
         pv.view.backgroundColor = .white
         popUpEffectType         = .flipDown //.zoomIn(default)/.zoomOut/.flipUp/.flipDown
