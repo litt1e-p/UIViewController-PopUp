@@ -23,7 +23,7 @@ Fully customizable the poping up any viewController, it just do some animated ef
 
 - use cocoapods
 ```swift
-pod 'UIViewController-Popup', '~> 0.0.2'
+pod 'UIViewController-Popup', '~> 0.0.4'
 ```
 - manual import
 ```swift
@@ -49,6 +49,14 @@ just download lib folder and add into your project
 <img src="Screenshots/screenshot04.gif" width="320">
 
 # Release notes
+
+- 0.0.4
+
+`the popup view can be dismissed everywhere now`
+
+- 0.0.3
+
+`fix bug of nil VisualEffectView`
 
 - 0.0.2
 
